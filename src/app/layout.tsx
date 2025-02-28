@@ -1,17 +1,33 @@
-import "./globals.css";
-
+import './globals.css'
+ 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="cs">
-      <body className="bg-gray-100 text-gray-900">
-        <header className="p-20 bg-blue-600 text-white text-xl font-bold text-center">
-          Reservation systems
+      <body className="min-h-screen bg-background text-black">
+
+        <header className="bg-secondary shadow w-full">
+        <div className="max-w-[1200px] mx-auto p-4 flex justify-center items-center gap-4">
+            <button className="min-w-40 px-6 py-2 bg-button text-black rounded-md font-semibold hover:bg-opacity-80 border border-stroke">
+              Rezervace
+            </button>
+            <button className="min-w-40 px-6 py-2 bg-button text-black rounded-md font-semibold hover:bg-opacity-80 border border-stroke">
+              Rezervace Kino
+            </button>
+          </div>
         </header>
-        <main className="container mx-auto p-4">{children}</main>
+
+
+        <main className="flex-1">
+          <div className="max-w-[1200px] mx-auto p-4">
+            {children}
+          </div>
+        </main>
+
+
         <footer className="p-4 text-center text-gray-500">
-          &copy; Test
+          &copy;, test
         </footer>
       </body>
     </html>
-  );
+  )
 }
