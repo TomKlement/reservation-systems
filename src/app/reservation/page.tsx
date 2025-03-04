@@ -1,7 +1,7 @@
 "use client";
 
-import Calendar from "@/app/components/Calendar"
-import AvailableTimes from "@/app/components/AvailableTimes";
+import Calendar from "@/app/reservation/components/Calendar"
+import AvailableTimes from "@/app/reservation/components/AvailableTimes";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -17,18 +17,12 @@ export default function ReservationPage() {
     setSelectedTime((prevTime) => (prevTime === time ? undefined : time));
   };
 
-  // selected new date =>date will unselect
+  // selected new date => date will unselect
   useEffect(() => {
     setSelectedTime(undefined);
   }, [selectedDate]);
 
   const handleContinue = () => {
-
-    if (!selectedDate || !selectedTime) {
-      alert("Prosím vyberte datum i čas.");
-      return;
-    }
-
     router.push(`/reservation/contact?date=${selectedDate}&time=${selectedTime}`);
   };
 
