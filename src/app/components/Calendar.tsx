@@ -4,8 +4,8 @@ import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import {cs} from "date-fns/locale"
 
-export default function Calendar() {
-    const [selected, setSelected] = useState<Date>();
+export default function Calendar({ selected, onSelect }: { selected: Date | undefined, onSelect: (date: Date | undefined) => void }) {
+
 
   return (
     <div className="p-6 rounded-lg shadow-lg ">
@@ -15,10 +15,10 @@ export default function Calendar() {
             fixedWeeks
             mode="single" required
             selected={selected}
-            onSelect={setSelected}
+            onSelect={onSelect}
             disabled={{ before: new Date() }}   
             modifiersClassNames={{
-                selected: "bg-secondary text-buttonText rounded-md",
+              selected: "bg-secondary text-buttonText rounded-md",
               disabled: "opacity-50 text-gray-500",
             }}
             classNames={{
@@ -28,8 +28,9 @@ export default function Calendar() {
                 chevron: "fill-tertiary",
                 nav: "flex justify-between items-center w-full",
                 month_caption: "text-lg font-bold text-center flex-1 pb-6 -mt-16",
+                today: ''
             }}   
         />
     </div>
   );
-}
+7}
