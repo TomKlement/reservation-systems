@@ -1,23 +1,25 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useReservation } from "../context/ReservationContext";
 import { format } from "date-fns";
 import { cs } from "date-fns/locale";
 import ContactForm from "@/app/reservation/components/ContactForm"; 
 
 
+/**
+ * ContactPage Component:
+ * Displays the selected reservation date and time in a formatted style.
+ * Renders the ContactForm component for user to enter contact details.
+ */
 export default function ContactPage() {
-  const searchParams = useSearchParams();
 
+  // Access current reservation details from the context
+  const { reservation } = useReservation();
 
-  const date = searchParams.get("date"); 
-  const time = searchParams.get("time");
-
-  
   let formattedDate;
-  if (date) {
-    const dateObj = new Date(date);
-    formattedDate = format(dateObj, "EEEE d.M.yyyy", { locale: cs });
+
+  if (reservation.date) {
+    formattedDate = format(reservation.date, "EEEE d.M.yyyy", { locale: cs });
   }
 
   return (
@@ -27,12 +29,12 @@ export default function ContactPage() {
         <h2 className="text-xl font-bold mb-4">Vybrané datum</h2>
         <div className="bg-secondary p-6 rounded-full text-center">
           <p className="text-xl uppercase">{formattedDate}</p>
-          <p className="text-lg">{time}</p>
+          <p className="text-lg">{reservation.time}</p>
         </div>
       </div>
 
 
-      <ContactForm dateParam={date} timeParam={time} />
+      <ContactForm />
     </div>
   );
 }

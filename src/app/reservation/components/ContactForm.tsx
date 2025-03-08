@@ -2,6 +2,8 @@
 
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { useReservation } from "../context/ReservationContext";
+
 
 type ContactFormData = {
   firstName: string;
@@ -10,35 +12,47 @@ type ContactFormData = {
   phone: string;
 };
 
-type ContactFormProps = {
-  dateParam: string | null;
-  timeParam: string | null;
-};
 
-export default function ContactForm({ dateParam, timeParam }: ContactFormProps) {
+/**
+ * ContactForm Component:
+ * Uses react-hook-form to manage input validation and submission.
+ * Prefills form fields with data from the reservation context (firstName, lastName, etc.).
+ * On submit, updates the reservation context and navigates to /reservation/summary.
+ */
+export default function ContactForm( ) {
+
+  // Access current reservation data and update function from context
+  const { reservation, setReservation } = useReservation();
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ContactFormData>({
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
+      firstName: reservation.firstName,
+      lastName: reservation.lastName,
+      email: reservation.email,
+      phone: reservation.phone,
     },
   });
-
-  const router = useRouter();
-
+  
+  /**
+   * Called when the form is submitted successfully.
+   * Updates reservation data in context and redirects to the summary page.
+   */
   const onSubmit = (data: ContactFormData) => {
+    setReservation((prev) => ({
+      ...prev,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      phone: data.phone,
+    }));
 
-    router.push(
-      `/reservation/summary?date=${dateParam}&time=${timeParam}` +
-      `&firstName=${data.firstName}&lastName=${data.lastName}&email=${data.email}` +
-      `&phone=${data.phone}`
-    );
-    
+
+    router.push("/reservation/summary");
   };
 
   return (

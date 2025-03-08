@@ -15,7 +15,7 @@ datasource db {
 
 model Reservation {
   id        String   @id @default(uuid())
-  date      DateTime
+  date      String
   time      String
   firstName String
   lastName  String
